@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Category from './components/Category';
+import Type from './components/Type';
+import IncExpInfo from './components/IncExpInfo';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        {/* Menu Bar */}
+        <nav>
+          <ul>
+            <li>
+              <Link to="/categories">Categories</Link>
+            </li>
+            <li>
+              <Link to="/types">Types</Link>
+            </li>
+            <li>
+              <Link to="/inc-exp-info">Inc & Exp</Link>
+            </li>
+          </ul>  
+        </nav>
+
+        {/* Routes */}
+        <Routes>
+          <Route path="/categories" element={<Category />} />
+          <Route path="/types" element={<Type />} />
+          <Route path="/inc-exp-info" element={<IncExpInfo />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
