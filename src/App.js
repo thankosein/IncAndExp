@@ -3,11 +3,13 @@ import Category from './components/Category';
 import Type from './components/Type';
 import IncExpInfo from './components/IncExpInfo';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import './index.css';
 
 const App = () => {
   return (
     <Router>
       <div>
+      <h1 className="text-4xl font-bold text-blue-600">Hello, Tailwind!</h1>
         {/* Menu Bar */}
         <nav>
           <ul>
