@@ -8,29 +8,37 @@ import './index.css';
 const App = () => {
   return (
     <Router>
-      <div>
-      <h1 className="text-4xl font-bold text-blue-600">Hello, Tailwind!</h1>
+      <div className="bg-gray-100 min-h-screen">      
         {/* Menu Bar */}
-        <nav>
-          <ul>
+        <nav className="bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4 py-2">
+          <ul className="flex space-x-4">
             <li>
-              <Link to="/categories">Categories</Link>
+              <Link to="/" className="text-blue-500 hover:underline">
+                Home
+              </Link>
             </li>
             <li>
+              <Link to="/categories" className="text-blue-500 hover:underline">Categories</Link>
+            </li>
+            {/* <li>
               <Link to="/types">Types</Link>
-            </li>
+            </li> */}
             <li>
-              <Link to="/inc-exp-info">Inc & Exp</Link>
+              <Link to="/inc-exp-info" className="text-blue-500 hover:underline">Inc & Exp</Link>
             </li>
           </ul>  
+          </div>
         </nav>
 
         {/* Routes */}
-        <Routes>
-          <Route path="/categories" element={<Category />} />
-          <Route path="/types" element={<Type />} />
-          <Route path="/inc-exp-info" element={<IncExpInfo />} />
-        </Routes>
+        <div className="max-w-7xl mx-auto p-4">
+          <Routes>
+            <Route path="/categories" element={<Category />} />
+            <Route path="/types" element={<Type />} />
+            <Route path="/inc-exp-info" element={<IncExpInfo />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );

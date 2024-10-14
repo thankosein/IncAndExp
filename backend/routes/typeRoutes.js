@@ -16,8 +16,7 @@ router.get('/', (req, res) => {
 // Add a new type
 router.post('/', (req, res) => {
   const { typename } = req.body;
-  typeModel.addType(typename, (err, newType) => {
-    console.log("tks");
+  typeModel.addType(typename, (err, newType) => {    
     if (err) {
       res.status(500).send('Error adding type');
     } else {

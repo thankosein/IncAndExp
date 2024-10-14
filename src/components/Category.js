@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSave, faTimes, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'; // Icons for save, cancel, edit, delete
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
@@ -14,10 +16,15 @@ const Category = () => {
   }, []);
 
   const addCategory = () => {
-    axios.post('http://localhost:5000/api/categories', { name: newCategory })
-      .then((response) => setCategories([...categories, response.data]))
+    axios.post('http://localhost:5000/api/categories', { Name: newCategory })
+      .then((response) => {
+        // Assuming response.data contains the newly created category object with an Id field
+        setCategories([...categories, response.data]);
+        setNewCategory(''); // Clear the input field after adding
+      })
       .catch((error) => console.error('Error adding category:', error));
   };
+
 
   // Enable editing mode for a category
   const enableEditing = (id, currentName) => {
@@ -51,8 +58,9 @@ const Category = () => {
   };
 
   return (
-    <div>
-      <h1>Expense Categories</h1>
+    <div className="max-w-full mx-auto px-8 py-4 bg-white rounded-lg shadow-md">
+    <h1 className="text-2xl font-bold mb-4">Expense Categories</h1>
+    <div className="flex mb-4">
 
       {/* Form to add a new category */}
       <input
@@ -60,28 +68,62 @@ const Category = () => {
         value={newCategory}
         onChange={(e) => setNewCategory(e.target.value)}
         placeholder="New Category"
+        className="border border-gray-300 rounded-l-md px-4 py-2 flex-grow focus:outline-none focus:border-blue-500"
       />
-      <button onClick={addCategory}>Add Category</button>
-
-      <ul>
+      <button 
+        onClick={addCategory} 
+        className="bg-blue-500 text-white rounded-r-md px-4 py-2 hover:bg-blue-600"
+      >
+        Add
+      </button>
+      </div>
+      <ul className="space-y-2">
         {categories.map((category) => (
-          <li key={category.Id}>
+          <li key={category.Id} className="flex justify-between items-center p-1 border border-gray-300 rounded-md">
+            <div className="flex-grow">
+              {editingCategoryId === category.Id ? (
+                <>
+                  <input
+                    type="text"
+                    value={editedCategoryName}
+                    onChange={(e) => setEditedCategoryName(e.target.value)}
+                    className="border border-gray-300 px-2 py-1 w-full"
+                  />
+                </>
+              ):(
+                <span className="text-gray-700">{category.Name}</span>
+              )}            
+            </div>
             {/* If this category is being edited, show input field */}
             {editingCategoryId === category.Id ? (
               <>
-                <input
-                  type="text"
-                  value={editedCategoryName}
-                  onChange={(e) => setEditedCategoryName(e.target.value)}
-                />
-                <button onClick={() => saveEdit(category.Id)}>Save</button>
-                <button onClick={cancelEdit}>Cancel</button>
+                <button 
+                  onClick={() => saveEdit(category.Id)}
+                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none"
+                  >
+                    <FontAwesomeIcon icon={faSave} />
+                </button>
+                <button 
+                  onClick={cancelEdit}
+                  className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 focus:outline-none"
+                  >
+                    <FontAwesomeIcon icon={faTimes} />
+                </button>
               </>
             ) : (
               <>
-                {category.Name}
-                <button onClick={() => enableEditing(category.Id, category.Name)}>Edit</button>
-                <button onClick={() => deleteCategory(category.Id)}>Delete</button>
+                <button 
+                  onClick={() => enableEditing(category.Id, category.Name)} 
+                  className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 focus:outline-none"
+                  >
+                    <FontAwesomeIcon icon={faEdit} />
+                </button>
+                <button 
+                  onClick={() => deleteCategory(category.Id)} 
+                  className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 focus:outline-none"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
               </>
             )}
           </li>

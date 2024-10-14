@@ -29,6 +29,7 @@ router.get('/:id', (req, res) => {
 // POST to add a new category
 router.post('/', (req, res) => {
   const { Name } = req.body;
+  console.log(req.body);
   categoryModel.addCategory(Name, (err, newCategory) => {
     if (err) {
       return res.status(500).json({ error: 'Error adding category' });
